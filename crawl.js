@@ -1,3 +1,5 @@
+const { JSDOM } = require("jsdom");
+
 /**
  *
  * @param {string} url
@@ -14,4 +16,34 @@ function normalizeUrl(url) {
   return fullPath;
 }
 
-module.exports = { normalizeUrl };
+/**
+ *
+ * @param {string} HTMLInput
+ * @param {string} baseURL
+ * @returns {string[]}
+ */
+
+function getURLsFromHTML(HTMLBody, baseURL) {
+  const dom = new JSDOM(HTMLBody);
+  const links = [];
+
+  for (const a of dom.window.document.querySelectorAll("a")) {
+    if (a.href.startsWith("/")) {
+      try {
+        links.push(new URL(a.href, baseURL).href);
+      } catch (error) {
+        console.log(`${error}: ${a.href}`);
+      }
+    } else {
+      try {
+        links.push(new URL(a.href).href);
+      } catch (error) {
+        console.log(`${error}: ${a.href}`);
+      }
+    }
+  }
+
+  return links;
+}
+
+module.exports = { normalizeUrl, getURLsFromHTML };

@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/AkifhanIlgaz/web-crawler/issues"
   },
-  "homepage": "https://github.com/AkifhanIlgaz/web-crawler#readme"
+  "homepage": "https://github.com/AkifhanIlgaz/web-crawler#readme",
+  "dependencies": {
+    "jsdom": "^21.1.0"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
+  }
 }
