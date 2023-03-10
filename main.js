@@ -1,4 +1,6 @@
-function main() {
+const { crawlPage } = require("./crawl");
+
+async function main() {
   const cliArguments = process.argv;
 
   if (cliArguments.length < 3) {
@@ -9,9 +11,10 @@ function main() {
     process.exit(1);
   }
 
-  const baseUrl = new URL(cliArguments[2]);
+  const baseUrl = cliArguments[2];
+  console.log(`starting to search ${baseUrl}`);
 
-  console.log(`starting to search ${baseUrl.host}`);
+  await crawlPage(baseUrl, baseUrl, {});
 }
 
 main();

@@ -46,4 +46,25 @@ function getURLsFromHTML(HTMLBody, baseURL) {
   return links;
 }
 
-module.exports = { normalizeUrl, getURLsFromHTML };
+async function crawlPage(baseURL, url, pages) {
+  try {
+    const res = await fetch(baseURL);
+
+    if (res.status > 399) {
+      console.error(`HTTP error, Status Code: ${res.status}`);
+      return;
+    }
+
+    if (!res.headers.get("Content-Type").includes("text/html")) {
+      console.error("Content type isn't HTML");
+      return;
+    }
+
+    const body = await res.text();
+    console.log(body);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+module.exports = { normalizeUrl, getURLsFromHTML, crawlPage };
