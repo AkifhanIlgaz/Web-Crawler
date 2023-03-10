@@ -14,7 +14,8 @@ async function main() {
   const baseUrl = cliArguments[2];
   console.log(`starting to search ${baseUrl}`);
 
-  await crawlPage(baseUrl, baseUrl, {});
+  const pages = await crawlPage(baseUrl, baseUrl, {});
+  console.log(pages);
 }
 
 main();

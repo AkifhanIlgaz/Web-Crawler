@@ -46,25 +46,50 @@ function getURLsFromHTML(HTMLBody, baseURL) {
   return links;
 }
 
-async function crawlPage(baseURL, url, pages) {
+async function crawlPage(baseURL, currentURL, pages) {
+  if (!isOnSameDomain(baseURL, currentURL)) {
+    return pages;
+  }
+
+  const normalizedCurrentURL = normalizeUrl(currentURL);
+
+  if (normalizedCurrentURL in pages) {
+    pages[normalizedCurrentURL]++;
+    return pages;
+  }
+
+  pages[normalizedCurrentURL] = 1;
+
   try {
-    const res = await fetch(baseURL);
+    const res = await fetch(currentURL);
 
     if (res.status > 399) {
       console.error(`HTTP error, Status Code: ${res.status}`);
-      return;
+      return pages;
     }
 
     if (!res.headers.get("Content-Type").includes("text/html")) {
       console.error("Content type isn't HTML");
-      return;
+      return pages;
     }
 
     const body = await res.text();
-    console.log(body);
+    const urls = getURLsFromHTML(body, baseURL);
+
+    for (const nextURL of urls) {
+      pages = await crawlPage(baseURL, nextURL, pages);
+    }
   } catch (error) {
     console.log(error.message);
   }
+
+  return pages;
+}
+
+function isOnSameDomain(url1, url2) {
+  url1 = new URL(url1);
+  url2 = new URL(url2);
+  return url1.hostname === url2.hostname;
 }
 
 module.exports = { normalizeUrl, getURLsFromHTML, crawlPage };
