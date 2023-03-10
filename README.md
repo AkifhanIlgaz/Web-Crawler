@@ -1,6 +1,6 @@
 # Web Crawler
 
-Command-line program that reports the internal linking of any website. It prints out the count of links to the websites that have same domain with the given website.
+Command-line program that reports the internal linking of any website. It prints out the count of internal links to the websites that have same domain with the given website.
 
 # How it works
 
