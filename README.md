@@ -10,7 +10,7 @@ First, you have to clone this repository on your local machine.
 git clone https://github.com/AkifhanIlgaz/web-crawler.git
 ```
 
-Then, type the command below to your terminal with the URL of website you want to crawl
+Then, type the command below to your terminal with the URL of website you want to crawl.
 
 ```bash
 npm run start <URL_of_website>
